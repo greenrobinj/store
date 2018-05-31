@@ -1,0 +1,15 @@
+<h1>Add A comment</h1>
+<%= form_for [@item, @comment] do |f| %>
+  <%= f.label :description %>
+  <%= f.text_area :description, required: true %>
+  <br />
+  <%= f.label :rating %>
+  <%= f.text_field :rating, %>
+  <br />
+  <%= f.submit %>
+<% end %>
+
+<hr />
+<p>Rating: <%= comment.rating %></p>
+<p><strong><%= comment.description %></strong></p>
+</hr>
