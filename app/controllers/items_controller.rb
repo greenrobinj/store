@@ -1,16 +1,17 @@
 class ItemsController < ApplicationController
   before_action :set_department
-  before_action :set_item, only [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
   
   def index
     @items = @department.items 
   end
 
   def show
+    @comments = Comment.where("item_id = #{@item.id}" )
   end
 
   def new
-    @item = @department.item.new
+    @item = @department.items.new
     # form
   end
 
@@ -21,7 +22,7 @@ class ItemsController < ApplicationController
   def create
     @item = @department.items.create(item_params)
     if @item.save
-      redirect)to (@department, @item)
+      redirect_to [@department, @item]
     else
       render :form 
     end
@@ -32,6 +33,8 @@ class ItemsController < ApplicationController
       redirect_to [@department, @item]
     else
       render :form
+    end
+  end
 
   def destroy
     @item.destroy
@@ -45,10 +48,11 @@ class ItemsController < ApplicationController
     end
 
     def set_item
-      @item = Item.find(parmas[:id])
+      @item = Item.find(params[:id])
     end
 
     def item_params
-      params.require(:item).permit(:description, :rating)
+      params.require(:item).permit(:description, :name)
     end
-end
+
+  end
